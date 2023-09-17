@@ -67,7 +67,7 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 
 
 		line_param := parameter_resolveds.map('${it.typ} ${it.name}').join(', ')
-		line_param_delegate := parameter_resolveds.map(fn [base_module] (it entities.Params) string {
+		line_param_delegate := parameter_resolveds.map(fn (it entities.Params) string {
 			return if it.typ == 'VString' {
 				'VStringInterop ${it.name}'
 			} else {
@@ -75,7 +75,7 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 			}
 		}).join(', ')
 
-		names_param := node_delegate.params.map(fn [base_module] (it entities.Params) string {
+		names_param := node_delegate.params.map(fn (it entities.Params) string {
 			return if it.typ.contains('string') {
 				'${it.name}.ToVStringInterop()'
 			} else {

@@ -7,7 +7,7 @@ pub:
 	project  Project
 	target   Target
 	compiler string = 'gcc'
-	prod	 bool   = false
+	prod	 bool
 }
 
 struct Project {
