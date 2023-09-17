@@ -1,0 +1,12 @@
+{
+  "project": {
+    "name": "MySimpleDll",
+    "entry_point": "src/main.v",
+    "compiler": "msvc",
+    "prod": false
+  },
+  "target": {
+    "language": "csharp",
+    "namespace": "SimpleProjCS"
+  }
+}
