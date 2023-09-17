@@ -3,6 +3,7 @@
 
 The idea is that you can develop your entire business rule in V and share it via .dll/.so/.dylib, the important thing is that your experience in the target language does not need to be adapted, it needs to be as if you had built it in your own language.
 
+![ray-so-export](https://github.com/ldedev/SdkBuilder/assets/7676415/da738d19-6b82-44cc-b62e-851589552243)
 
 
 ## Funcionalidades
@@ -113,5 +114,11 @@ Note that the method names are in good C# practices, because the idea here is to
 
 ## Demonstração
 
-[vídeo]
+https://github.com/ldedev/SdkBuilder/assets/7676415/cb15451e-8b7a-49d4-bf7e-eddeed5b03c6
+
+
+https://github.com/ldedev/SdkBuilder/assets/7676415/5a7e89d0-2ec7-4283-9adc-b81bbd6715fb
+
+
+
 
