@@ -8,6 +8,7 @@ The idea is that you can develop your entire business rule in V and share it via
 
 ## Funcionalidades
 
+- [ ] Multi plataform (C# interop and other languages have not yet been implemented)
 - [x] Functions that return primitive types.
 - [x] Functions with struct return.
 - [x] Basic implementation of V strings.
