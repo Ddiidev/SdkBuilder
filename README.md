@@ -112,7 +112,7 @@ using (var sdk = new MySimpleDll())
 Note that the method names are in good C# practices, because the idea here is to really have the experience of using a native Nuget lib.
 
 
-## Demonstração
+## Demonstration
 
 https://github.com/ldedev/SdkBuilder/assets/7676415/cb15451e-8b7a-49d4-bf7e-eddeed5b03c6
 
