@@ -23,6 +23,15 @@ namespace @{name_space_project}.Interop
                 : (stringCSharp = Marshal.PtrToStringUTF8(str) ?? "");
         }
 
+        public VStringInterop ToVStringInterop()
+        {
+            return new VStringInterop
+            {
+                len = this.len,
+                str = this.str
+            };
+        }
+
         public static implicit operator string(VString vs) => vs.ToString();
 
         public static implicit operator VString(string s)
