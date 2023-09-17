@@ -66,7 +66,7 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 		})
 
 
-		line_param := parameter_resolveds.map('${it.typ} ${it.name}').join(', ')
+		line_param := parameter_resolveds.map(' ${it.typ} ${it.name}').join(', ')
 		line_param_delegate := parameter_resolveds.map(fn (it entities.Params) string {
 			return if it.typ == 'VString' {
 				'VStringInterop ${it.name}'

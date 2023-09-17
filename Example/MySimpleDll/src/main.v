@@ -17,15 +17,15 @@ fn return_string() string {
 
 pub struct Struct {
 pub mut:
-	i int
-	s string
+	age int
+	name string
 }
 
 [export: 'return_struct']
-fn return_struct() Struct {
+fn return_struct(name string, age int) Struct {
 	return Struct{
-		i: 32
-		s: "Hello Word!"
+		age: age
+		name: name
 	}
 }
 
