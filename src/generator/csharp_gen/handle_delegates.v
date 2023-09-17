@@ -34,6 +34,7 @@ fn resolver_name_type(name_type string, name_module string) string {
 }
 
 fn (mut ex_ast ExtensionAst) handle_delegates() {
+	println('\n -- Implementing delegates -- ')
 	base_module := if ex_ast.ast.stmts.first().ast_type == 'Module' {
 		ex_ast.ast.stmts.first().name
 	} else {
@@ -82,6 +83,7 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 			}
 		}).join(', ')
 
+		println('-> $name_delegate')
 		mut code_struct := $tmpl('sdk_files/ImplDelegates.cs')
 
 

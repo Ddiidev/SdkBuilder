@@ -12,7 +12,12 @@ pub fn construct(file_conf string) ! {
 	conf := json.decode(SdkBuilderConfiguration, content_file_conf)!
 	root_path := file_conf.split(os.path_separator)#[0..-1].join(os.path_separator)
 	full_path := os.join_path(root_path, conf.project.entry_point)
+
+	println("Reading file conf. sdk")
+
 	ast := ast_v.get(full_path)!
+
+	println("Generating sdk, language target: ${conf.target.language}")
 
 	match conf.target.language {
 		.v {

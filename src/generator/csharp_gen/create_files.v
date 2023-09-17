@@ -3,7 +3,9 @@ module csharp_gen
 import os
 
 fn create_files_class_sdk(ast ExtensionAst) ! {
+	println('\n -- Create files class sdk -- ')
 	for struct_name, struct_content in ast.structs {
+		println('-> ${struct_name}.cs')
 		os.write_file(os.join_path(ast.path_name_dll, '${struct_name}.cs'), struct_content)!
 	}
 
@@ -20,6 +22,11 @@ fn create_files_class_sdk(ast ExtensionAst) ! {
 }
 
 fn create_files_class_interop(path_interop string, name_space_project string) ! {
+	println('\n -- Create files class interop -- ')
+	println('-> Dl.cs')
+	println('-> VString.cs')
+	println('-> VStringInterop.cs')
+
 	code_dl := $tmpl('sdk_files/Dl.cs')
 	code_vstring := $tmpl('sdk_files/VString.cs')
 	code_vstring_interop := $tmpl('sdk_files/VStringInterop.cs')

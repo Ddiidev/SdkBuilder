@@ -14,6 +14,7 @@ pub fn get(_file_path string) !Ast {
 		file_path = file_path#[0..-1]
 	}
 
+	println('Generate AST for "${file_path}"')
 	result := os.execute('v ast -p --hide "imports,auto_imports,imported_symbols,embedded_files,global_labels,mod,is_noreturn,is_manualfree" -t "${file_path}"')
 
 	if result.exit_code > 0 {

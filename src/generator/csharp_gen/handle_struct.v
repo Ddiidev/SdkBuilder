@@ -8,6 +8,7 @@ pub:
 }
 
 fn (mut ex_ast ExtensionAst) handle_struct() {
+	println('\n -- Implementing structs -- ')
 	base_module := if ex_ast.ast.stmts.first().ast_type == 'Module' {
 		ex_ast.ast.stmts.first().name
 	} else {
@@ -39,6 +40,7 @@ fn (mut ex_ast ExtensionAst) handle_struct() {
 
 		arguments := '${name_struct}Interop _arg'
 
+		println('-> $name_struct')
 		code_struct := $tmpl('sdk_files/ImplStruct.cs').replace('\n\n', '\n')
 
 		ex_ast.structs[name_struct] = code_struct

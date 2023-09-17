@@ -1,6 +1,7 @@
 module csharp_gen
 
 fn implement_constructor(mut ast ExtensionAst) {
+	println('\n -- Implement constructor -- ')
 	name_class_dl := ast.project_name
 	name_dl_with_ext := name_class_dl + $if linux {
 		'.so'
@@ -20,6 +21,7 @@ fn implement_constructor(mut ast ExtensionAst) {
 		}
 	}
 
+	println('-> $name_class_dl')
 	code_constructor := $tmpl('sdk_files/ImplConstructorDl.cs').replace('\n\n', '\n\t')
 	ast.constructor_dl = code_constructor
 }
