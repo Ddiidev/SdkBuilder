@@ -6,13 +6,13 @@ pub struct SdkBuilderConfiguration {
 pub:
 	project  Project
 	target   Target
-	compiler string = 'gcc'
 	prod	 bool
 }
 
 struct Project {
 pub:
 	name        string
+	compiler string = 'gcc'
 	entry_point string = 'src/main.v'
 }
 
