@@ -16,6 +16,7 @@ pub fn construct(file_conf string) ! {
 	println("Reading file conf. sdk")
 
 	ast := ast_v.get(full_path)!
+	println("opa")
 
 	println("Generating sdk, language target: ${conf.target.language}")
 

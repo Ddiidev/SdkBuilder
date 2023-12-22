@@ -15,11 +15,25 @@ pub fn get(_file_path string) !Ast {
 	}
 
 	println('Generate AST for "${file_path}"')
+	check_code(file_path) or { 
+		panic(err.msg())
+	 }
 	result := os.execute('v ast -p --hide "imports,auto_imports,imported_symbols,embedded_files,global_labels,mod,is_noreturn,is_manualfree" -t "${file_path}"')
 
 	if result.exit_code > 0 {
 		return error(result.output)
 	}
 
-	return json.decode(Ast, result.output)!
+	return json.decode(Ast, result.output) or {
+		println("opa")
+	}
+}
+
+
+fn check_code(file_path string) ! {
+	result := os.execute('v -check "${file_path}"')
+
+	if result.exit_code > 0 || result.output.contains('notice') {
+		return error(result.output)
+	}
 }
