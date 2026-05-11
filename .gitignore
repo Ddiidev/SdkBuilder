@@ -25,3 +25,5 @@ bin/
 *.js
 /projects_sdk
 /bin
+*.exp
+*.lib

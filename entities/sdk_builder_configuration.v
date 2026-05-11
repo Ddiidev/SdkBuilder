@@ -4,15 +4,15 @@ import contract { TypeGenerate }
 
 pub struct SdkBuilderConfiguration {
 pub:
-	project  Project
-	target   Target
-	compiler string = 'gcc'
-	prod	 bool
+	project Project
+	target  Target
+	prod    bool
 }
 
 struct Project {
 pub:
 	name        string
+	compiler    string = 'gcc'
 	entry_point string = 'src/main.v'
 }
 
