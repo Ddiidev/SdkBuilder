@@ -10,7 +10,7 @@ fn implement_constructor(mut ast ExtensionAst) {
 	} $else {
 		'.dll'
 	}
-	path_dl_with_ext := '${ast.namespace}Interop/${ast.project_name}/$name_dl_with_ext'
+	path_dl_with_ext := '${ast.namespace}Interop/${ast.project_name}/${name_dl_with_ext}'
 	mut functions := []FnArgImplConstructorDl{}
 
 	for name_delegate, delegate in ast.delegates {
@@ -21,7 +21,7 @@ fn implement_constructor(mut ast ExtensionAst) {
 		}
 	}
 
-	println('-> $name_class_dl')
+	println('-> ${name_class_dl}')
 	code_constructor := $tmpl('sdk_files/ImplConstructorDl.cs').replace('\n\n', '\n\t')
 	ast.constructor_dl = code_constructor
 }

@@ -4,6 +4,7 @@ import entities { Ast, SdkBuilderConfiguration }
 import os
 
 pub struct CSharpGenerator {
+pub:
 	conf       SdkBuilderConfiguration
 	path_lib_v string
 	ast_v      Ast

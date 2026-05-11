@@ -9,6 +9,7 @@ SdkBuilder
 
 # Ignore binary output folders
 bin/
+.velvet/
 
 # Ignore common editor/system specific metadata
 .DS_Store

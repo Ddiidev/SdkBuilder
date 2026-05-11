@@ -66,7 +66,7 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 		})
 
 
-		line_param := parameter_resolveds.map(' ${it.typ} ${it.name}').join(', ')
+		line_param := parameter_resolveds.map(' aa${it.typ} ${it.name}').join(', ')
 		line_param_delegate := parameter_resolveds.map(fn (it entities.Params) string {
 			return if it.typ == 'VString' {
 				'VStringInterop ${it.name}'
@@ -83,19 +83,19 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 			}
 		}).join(', ')
 
-		println('-> $name_delegate')
+		println('-> ${name_delegate}')
 		mut code_struct := $tmpl('sdk_files/ImplDelegates.cs')
 
 
 		value_return_fn := match type_fn {
 			'string' {
-				'new VString(_${name_fn}($names_param))'
+				'new VString(_${name_fn}(${names_param}))'
 			}
 			'int', 'float', 'double', 'void' {
-				'_${name_fn}($names_param)'
+				'_${name_fn}(${names_param})'
 			}
 			else {
-				'new ${type_fn}(_${name_fn}($names_param))'
+				'new ${type_fn}(_${name_fn}(${names_param}))'
 			}
 		}
 		code_struct += $tmpl('sdk_files/ImplPropertyFromDelegates.cs').replace('\n\n',

@@ -1,16 +1,16 @@
 module main
 
-[export: 'return_integer32']
+@[export: 'return_integer32']
 fn return_integer32() int {
 	return 32
 }
 
-[export: 'return_float32']
+@[export: 'return_float32']
 fn return_float32() f32 {
 	return 32.0
 }
 
-[export: 'return_string']
+@[export: 'return_string']
 fn return_string() string {
 	return '32 - teste'
 }
@@ -21,7 +21,7 @@ pub mut:
 	name string
 }
 
-[export: 'return_struct']
+@[export: 'return_struct']
 fn return_struct(name string, age int) Struct {
 	return Struct{
 		age: age
@@ -29,17 +29,17 @@ fn return_struct(name string, age int) Struct {
 	}
 }
 
-[export: 'return_void']
+@[export: 'return_void']
 fn return_void() {
 	println("is void")
 }
 
-[export: 'input_args']
+@[export: 'input_args']
 fn input_args(s string, i int) int {
 	return s.int() + i
 }
 
-[export: 'fibonacci']
+@[export: 'fibonacci']
 fn fibonacci(n f64) f64 {
     mut f_n := n
     mut f_n1 := f64(0.0)

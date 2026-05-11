@@ -8,6 +8,7 @@ fn main() {
 		eprintln('Usage: builder_sdk <config file>')
 		return
 	}
+
 	println('Building SDK')
 	builder_sdk.construct(file_conf_sdk)!
 }
