@@ -26,6 +26,7 @@ pub fn get(_file_path string) !Ast {
 
 	return json.decode(Ast, result.output) or {
 		println("opa")
+		Ast{}
 	}
 }
 
