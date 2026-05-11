@@ -1,43 +1,27 @@
-@for using in usings
-using @{using};
-@end
-
-namespace @{name_space} . @{name_space}Interop . @{project_name}
+<#list usings as using>using ${using};
+</#list>
+namespace ${full_namespace}
 {
-    // StructInterop pure
-    public struct @{name_struct}Interop
+    public struct ${name_struct}Interop
     {
-@for prop in props
-    @if prop.relation_typ != ''
-        public @{prop.relation_typ}Interop @{prop.name};
-    @else
-        public @{prop.typ} @{prop.name};
-    @end
-@end
+<#list props as prop><#if prop.relation_typ != ''>
+        public ${prop.relation_typ}Interop ${prop.name};<#else>
+        public ${prop.typ} ${prop.name};</#if>
+</#list>
     }
 
-    // StructInterop with relation
-    public struct @{name_struct}
+    public struct ${name_struct}
     {
-        // Properties
+<#list props as prop><#if prop.relation_typ != ''>
+        public ${prop.relation_typ} ${prop.name};<#else>
+        public ${prop.typ} ${prop.name};</#if>
+</#list>
 
-@for prop in props
-    @if prop.relation_typ != ''
-        public @{prop.relation_typ} @{prop.name};
-    @else
-        public @{prop.typ} @{prop.name};
-    @end
-@end
-
-        // Constructor
-        public @{name_struct}(@{arguments}) {
-    @for prop in props
-        @if prop.relation_typ != ''
-            @{prop.name} = new @{prop.relation_typ}(_arg. @{prop.name});
-        @else
-            @{prop.name} = _arg. @{prop.name};
-        @end
-    @end
+        public ${name_struct}(${arguments}) {
+<#list props as prop><#if prop.relation_typ != ''>
+            ${prop.name} = new ${prop.relation_typ}(${arg_prefix}${prop.name});<#else>
+            ${prop.name} = ${arg_prefix}${prop.name};</#if>
+</#list>
         }
     }
 }

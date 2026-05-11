@@ -1,4 +1,4 @@
-namespace @{name_space_project}.Interop
+namespace ${namespace_interop}
 {
     public struct VStringInterop
     {

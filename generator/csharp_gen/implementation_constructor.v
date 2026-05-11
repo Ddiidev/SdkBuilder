@@ -1,6 +1,8 @@
 module csharp_gen
 
-fn implement_constructor(mut ast ExtensionAst) {
+import leafscale.veemarker
+
+fn implement_constructor(mut ast ExtensionAst, mut engine veemarker.Engine) {
 	println('\n -- Implement constructor -- ')
 	name_class_dl := ast.project_name
 	name_dl_with_ext := name_class_dl + $if linux {
@@ -21,8 +23,26 @@ fn implement_constructor(mut ast ExtensionAst) {
 		}
 	}
 
+	mut functions_data := []veemarker.Any{}
+	for f in functions {
+		mut f_map := map[string]veemarker.Any{}
+		f_map['variable_function'] = veemarker.Any(f.variable_function)
+		f_map['delegate_function'] = veemarker.Any(f.delegate_function)
+		f_map['name_function_dl'] = veemarker.Any(f.name_function_dl)
+		functions_data << veemarker.Any(f_map)
+	}
+
+	mut data := map[string]veemarker.Any{}
+	data['name_class_dl'] = veemarker.Any(name_class_dl)
+	data['path_dl_with_ext'] = veemarker.Any(path_dl_with_ext)
+	data['functions'] = veemarker.Any(functions_data)
+
 	println('-> ${name_class_dl}')
-	code_constructor := $tmpl('sdk_files/ImplConstructorDl.cs').replace('\n\n', '\n\t')
+	code_constructor := engine.render('ImplConstructorDl.cs', data) or {
+		eprintln('Template error (ImplConstructorDl): ${err}')
+		''
+	}
+
 	ast.constructor_dl = code_constructor
 }
 

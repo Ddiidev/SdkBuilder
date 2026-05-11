@@ -1,18 +1,18 @@
-using @{name_space}.Interop;
-namespace @{name_space}. @{name_space}Interop. @{project_name} {
-    public class @{project_name} : IDisposable {
+using ${namespace_interop};
+namespace ${full_namespace}
+{
+    public class ${project_name} : IDisposable
+    {
         private IntPtr DlPtr;
+<#list delegates as delegate>
+${delegate.content}
+</#list>
+${constructor_dl}
 
-@for _, delegate in delegates
-		@{delegate.content.replace('\n', '\n\t')}
-@end
-
-@{constructor_dl.replace('\n', '\n\t')}
-
-      public void Dispose()
-      {
-      	Dl.FreeLibrary(DlPtr);
-      	GC.SuppressFinalize(this);
-      }
+        public void Dispose()
+        {
+            Dl.FreeLibrary(DlPtr);
+            GC.SuppressFinalize(this);
+        }
     }
 }

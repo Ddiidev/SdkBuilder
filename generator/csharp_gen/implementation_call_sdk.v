@@ -1,6 +1,8 @@
 module csharp_gen
 
-fn implement_calls_sdk(mut ast ExtensionAst) {
-	ast.handle_struct()
-	ast.handle_delegates()
+import leafscale.veemarker
+
+fn implement_calls_sdk(mut ast ExtensionAst, mut engine veemarker.Engine) {
+	ast.handle_struct(mut engine)
+	ast.handle_delegates(mut engine)
 }

@@ -1,6 +1,7 @@
 module csharp_gen
 
 import entities
+import leafscale.veemarker
 
 const types_relation = {
 	'f32': 'float'
@@ -33,15 +34,15 @@ fn resolver_name_type(name_type string, name_module string) string {
 	}
 }
 
-fn (mut ex_ast ExtensionAst) handle_delegates() {
+fn (mut ext ExtensionAst) handle_delegates(mut engine veemarker.Engine) {
 	println('\n -- Implementing delegates -- ')
-	base_module := if ex_ast.ast.stmts.first().ast_type == 'Module' {
-		ex_ast.ast.stmts.first().name
+	base_module := if ext.ast.stmts.first().ast_type == 'Module' {
+		ext.ast.stmts.first().name
 	} else {
 		''
 	}
 
-	for node_delegate in ex_ast.ast.stmts.filter(it.ast_type == 'FnDecl') {
+	for node_delegate in ext.ast.stmts.filter(it.ast_type == 'FnDecl') {
 		name_fn, pure_name_fn := if node_delegate.name.contains('${base_module}.') {
 			pure_name := node_delegate.name[base_module.len + 1..]
 			resolver_names(pure_name), pure_name
@@ -51,7 +52,7 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 		type_fn := resolver_name_type(node_delegate.return_type, base_module)
 		type_delegate := if type_fn == 'VString' {
 			'VStringInterop'
-		} else if type_fn in ex_ast.structs {
+		} else if type_fn in ext.structs {
 			'${type_fn}Interop'
 		} else {
 			type_fn
@@ -65,8 +66,6 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 			}
 		})
 
-
-		line_param := parameter_resolveds.map(' aa${it.typ} ${it.name}').join(', ')
 		line_param_delegate := parameter_resolveds.map(fn (it entities.Params) string {
 			return if it.typ == 'VString' {
 				'VStringInterop ${it.name}'
@@ -83,10 +82,6 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 			}
 		}).join(', ')
 
-		println('-> ${name_delegate}')
-		mut code_struct := $tmpl('sdk_files/ImplDelegates.cs')
-
-
 		value_return_fn := match type_fn {
 			'string' {
 				'new VString(_${name_fn}(${names_param}))'
@@ -98,13 +93,40 @@ fn (mut ex_ast ExtensionAst) handle_delegates() {
 				'new ${type_fn}(_${name_fn}(${names_param}))'
 			}
 		}
-		code_struct += $tmpl('sdk_files/ImplPropertyFromDelegates.cs').replace('\n\n',
-			'\n')
 
-		ex_ast.delegates[name_delegate] = Delegate{
+		line_param := parameter_resolveds.map(fn (it entities.Params) string {
+		return '${it.typ} ${it.name}'
+	}).join(', ')
+
+		mut data := map[string]veemarker.Any{}
+		data['type_delegate'] = veemarker.Any(type_delegate)
+		data['name_delegate'] = veemarker.Any(name_delegate)
+		data['line_param_delegate'] = veemarker.Any(line_param_delegate)
+
+		println('-> ${name_delegate}')
+		code_struct := engine.render('ImplDelegates.cs', data) or {
+			eprintln('Template error (ImplDelegates): ${err}')
+			''
+		}
+
+		mut data_prop := map[string]veemarker.Any{}
+		data_prop['name_delegate'] = veemarker.Any(name_delegate)
+		data_prop['name_fn'] = veemarker.Any(name_fn)
+		data_prop['type_fn'] = veemarker.Any(type_fn)
+		data_prop['line_param'] = veemarker.Any(line_param)
+		data_prop['value_return_fn'] = veemarker.Any(value_return_fn)
+
+		code_prop := engine.render('ImplPropertyFromDelegates.cs', data_prop) or {
+			eprintln('Template error (ImplPropertyFromDelegates): ${err}')
+			''
+		}
+
+		code_struct_combined := code_struct + '\n' + code_prop
+
+		ext.delegates[name_delegate] = Delegate{
 			name_function_dl: pure_name_fn
 			name_var_function: '_${name_fn}'
-			content: code_struct
+			content: code_struct_combined
 		}
 	}
 }
