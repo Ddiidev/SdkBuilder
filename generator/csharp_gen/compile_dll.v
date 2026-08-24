@@ -9,7 +9,8 @@ fn (this CSharpGenerator) compile_dll(path_name_dll string) ! {
 	println('-> Compiler : ${this.conf.project.compiler}')
 	println('-> Production : ${this.conf.prod}')
 	prod := if this.conf.prod { ' -prod' } else { '' }
-	res := os.execute('v -cc ${this.conf.project.compiler} ${prod} -shared "${this.path_lib_v}" -o "${path_name_dll}/${this.conf.project.name}.dll"')
+	path_file_entry := os.join_path(this.path_lib_v, this.conf.project.entry_point)
+	res := os.execute('v -cc ${this.conf.project.compiler} ${prod} -shared "${path_file_entry}" -o "${path_name_dll}/${this.conf.project.name}.dll"')
 	if res.exit_code != 0 {
 		return error('Failed to compile the V library | err: ${res.output}')
 	}

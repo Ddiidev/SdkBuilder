@@ -42,7 +42,7 @@ fn (mut ext ExtensionAst) handle_struct(mut engine veemarker.Engine) {
 
 		arguments := '${name_struct}Interop _arg'
 
-		println('-> $name_struct')
+		println('-> ${name_struct}')
 
 		mut props_data := []veemarker.Any{}
 		for prop in props {
